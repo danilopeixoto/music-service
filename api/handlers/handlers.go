@@ -188,19 +188,11 @@ func DeleteSong(context *fiber.Ctx) error {
 
 	song := new(models.Song)
 
-	err = db.Transaction(func(tx *gorm.DB) error {
-		if err := tx.First(song, id).Error; err != nil {
-			return err
-		}
+	if err := db.First(song, id).Error; err != nil {
+		return err
+	}
 
-		if err := tx.Delete(song).Error; err != nil {
-			return err
-		}
-
-		return nil
-	})
-
-	if err != nil {
+	if err := db.Delete(song).Error; err != nil {
 		return err
 	}
 
