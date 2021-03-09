@@ -8,7 +8,8 @@ WORKDIR /usr/bin/api/
 
 COPY . .
 
-RUN go install .
+RUN go get github.com/swaggo/swag/cmd/swag
+RUN swag init && go install .
 
 EXPOSE 8000
 

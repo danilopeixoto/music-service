@@ -24,6 +24,7 @@ services:
       - API_VERSION
       - DATABASE_HOSTNAME
       - DATABASE_PORT
+      - DATABASE_NAME
       - DATABASE_USERNAME_FILE
       - DATABASE_PASSWORD_FILE
     secrets:
@@ -41,6 +42,7 @@ services:
     expose:
       - '${DATABASE_PORT}'
     environment:
+      - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER_FILE=${DATABASE_USERNAME_FILE}
       - POSTGRES_PASSWORD_FILE=${DATABASE_PASSWORD_FILE}
     secrets:
