@@ -3,8 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
 
+	"danilopeixoto.com/api/music/config"
 	"danilopeixoto.com/api/music/database"
 	"danilopeixoto.com/api/music/models"
 	"danilopeixoto.com/api/music/routers"
@@ -23,9 +23,10 @@ import (
 // @host localhost:8080
 // @BasePath /
 func main() {
-	port := os.Getenv("API_PORT")
-
+	config.LoadConfig()
 	database.Connect()
+
+	apiConfig := config.GetAPIConfig()
 
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(context *fiber.Ctx, err error) error {
@@ -48,5 +49,5 @@ func main() {
 
 	routers.SetupRoutes(app)
 
-	app.Listen(fmt.Sprintf(":%s", port))
+	app.Listen(fmt.Sprintf(":%s", apiConfig.Port))
 }

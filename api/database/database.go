@@ -2,10 +2,9 @@ package database
 
 import (
 	"fmt"
-	"os"
 
+	"danilopeixoto.com/api/music/config"
 	"danilopeixoto.com/api/music/models"
-	"danilopeixoto.com/api/music/utils"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -15,16 +14,15 @@ var instance *gorm.DB
 
 // Connect function
 func Connect() {
-	hostname := os.Getenv("DATABASE_HOSTNAME")
-	port := os.Getenv("DATABASE_PORT")
-	databaseName := os.Getenv("DATABASE_NAME")
-
-	username := utils.ReadSecret("DATABASE_USERNAME_FILE")
-	password := utils.ReadSecret("DATABASE_PASSWORD_FILE")
+	dbConfig := config.GetDatabaseConfig()
 
 	dsn := fmt.Sprintf(
 		"host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
-		hostname, port, databaseName, username, password)
+		dbConfig.Hostname,
+		dbConfig.Port,
+		dbConfig.DatabaseName,
+		dbConfig.Username,
+		dbConfig.Password)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 

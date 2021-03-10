@@ -2,8 +2,8 @@ package routers
 
 import (
 	"fmt"
-	"os"
 
+	"danilopeixoto.com/api/music/config"
 	_ "danilopeixoto.com/api/music/docs" // generated docs
 	"danilopeixoto.com/api/music/handlers"
 	"danilopeixoto.com/api/music/models"
@@ -13,9 +13,8 @@ import (
 
 // SetupRoutes function
 func SetupRoutes(app *fiber.App) {
-	version := os.Getenv("API_VERSION")
-
-	root := app.Group(fmt.Sprintf("/%s", version))
+	apiConfig := config.GetAPIConfig()
+	root := app.Group(fmt.Sprintf("/%s", apiConfig.Version))
 
 	api := root.Group("/api")
 
