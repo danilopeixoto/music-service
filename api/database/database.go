@@ -13,7 +13,7 @@ import (
 var instance *gorm.DB
 
 // Connect function
-func Connect() {
+func Connect() *gorm.DB {
 	dbConfig := config.GetDatabaseConfig()
 
 	dsn := fmt.Sprintf(
@@ -34,6 +34,8 @@ func Connect() {
 	db.AutoMigrate(models.GetDatabaseModels()...)
 
 	instance = db
+
+	return instance
 }
 
 // GetDatabase function

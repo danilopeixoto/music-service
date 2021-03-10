@@ -6,6 +6,7 @@ import (
 
 	"danilopeixoto.com/api/music/config"
 	"danilopeixoto.com/api/music/database"
+	"danilopeixoto.com/api/music/log"
 	"danilopeixoto.com/api/music/models"
 	"danilopeixoto.com/api/music/routers"
 	"github.com/go-playground/validator/v10"
@@ -23,8 +24,11 @@ import (
 // @host localhost:8080
 // @BasePath /
 func main() {
-	config.LoadConfig()
+	config.Load()
+	logger := log.Initialize()
+
 	database.Connect()
+	logger.Info("Database connection successful.")
 
 	apiConfig := config.GetAPIConfig()
 
@@ -49,5 +53,6 @@ func main() {
 
 	routers.SetupRoutes(app)
 
+	logger.Info(fmt.Sprintf("Server listening on port %s...", apiConfig.Port))
 	app.Listen(fmt.Sprintf(":%s", apiConfig.Port))
 }

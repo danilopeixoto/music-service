@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"danilopeixoto.com/api/music/database"
+	"danilopeixoto.com/api/music/log"
 	"danilopeixoto.com/api/music/models"
 	"danilopeixoto.com/api/music/utils"
 	"github.com/gofiber/fiber/v2"
@@ -20,6 +21,9 @@ import (
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
 func AddSong(context *fiber.Ctx) error {
+	logger := log.GetLogger()
+	logger.Info("Executing AddSong /v1/api (POST)...")
+
 	db := database.GetDatabase()
 
 	songRequest := new(models.SongRequest)
@@ -56,6 +60,9 @@ func AddSong(context *fiber.Ctx) error {
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
 func GetAllSongs(context *fiber.Ctx) error {
+	logger := log.GetLogger()
+	logger.Info("Executing GetAllSongs /v1/api (GET)...")
+
 	db := database.GetDatabase()
 
 	songQuery := new(models.SongQuery)
@@ -93,6 +100,9 @@ func GetAllSongs(context *fiber.Ctx) error {
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
 func GetSong(context *fiber.Ctx) error {
+	logger := log.GetLogger()
+	logger.Info("Executing GetSong /v1/api/{id} (GET)...")
+
 	db := database.GetDatabase()
 
 	id, err := uuid.Parse(context.Params("id"))
@@ -123,6 +133,9 @@ func GetSong(context *fiber.Ctx) error {
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
 func UpdateSong(context *fiber.Ctx) error {
+	logger := log.GetLogger()
+	logger.Info("Executing UpdateSong /v1/api/{id} (PUT)...")
+
 	db := database.GetDatabase()
 
 	id, err := uuid.Parse(context.Params("id"))
@@ -178,6 +191,9 @@ func UpdateSong(context *fiber.Ctx) error {
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
 func DeleteSong(context *fiber.Ctx) error {
+	logger := log.GetLogger()
+	logger.Info("Executing DeleteSong /v1/api/{id} (DELETE)...")
+
 	db := database.GetDatabase()
 
 	id, err := uuid.Parse(context.Params("id"))
