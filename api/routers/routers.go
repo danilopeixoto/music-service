@@ -24,7 +24,7 @@ func SetupRoutes(app *fiber.App) {
 	api.Put("/:id", handlers.UpdateSong)
 	api.Delete("/:id", handlers.DeleteSong)
 
-	app.Get("/docs/*", swagger.Handler)
+	root.Use("/docs", swagger.Handler)
 
 	app.Use(func(context *fiber.Ctx) error {
 		return context.Status(fiber.StatusNotFound).JSON(
